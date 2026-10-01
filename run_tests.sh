@@ -13,10 +13,11 @@ set -euo pipefail
 
 here=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 directory=${1:-}
+shift || true
 
 if [ ! -d "${here}/${directory}" ]; then
     echo "usage: $0 <directory>" >&2
     exit 2
 fi
 
-exec bats --timing --print-output-on-failure "${here}/${directory}"
+exec bats --timing --print-output-on-failure -r "$@" "${here}/${directory}"
