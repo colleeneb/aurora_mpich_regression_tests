@@ -1,3 +1,10 @@
+spec:
+  inputs:
+    allocation:
+      default: datascience
+      description: ALCF allocation to charge the batch jobs to (-A).
+---
+
 stages:
   - build
   - test
@@ -46,7 +53,7 @@ test-1node:
   extends: .aurora-debug-test
   variables:
     ANL_AURORA_SCHEDULER_PARAMETERS: >-
-      -A datascience -l select=1,walltime=1:00:00,filesystems=home:flare -q debug
+      -A $[[ inputs.allocation ]] -l select=1,walltime=1:00:00,filesystems=home:flare -q debug
   script:
     - ./ci/run-suite.sh 1node
 
@@ -54,6 +61,6 @@ test-2node:
   extends: .aurora-debug-test
   variables:
     ANL_AURORA_SCHEDULER_PARAMETERS: >-
-      -A datascience -l select=2,walltime=1:00:00,filesystems=home:flare -q debug
+      -A $[[ inputs.allocation ]] -l select=2,walltime=1:00:00,filesystems=home:flare -q debug
   script:
     - ./ci/run-suite.sh 2node
