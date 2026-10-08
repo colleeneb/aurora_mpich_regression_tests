@@ -1,7 +1,7 @@
 spec:
   inputs:
     allocation:
-      default: datascience
+      default: Aurora_testing
       description: ALCF allocation to charge the batch jobs to (-A).
 ---
 
