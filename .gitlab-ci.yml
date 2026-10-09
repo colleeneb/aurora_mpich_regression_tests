@@ -1,0 +1,66 @@
+spec:
+  inputs:
+    allocation:
+      default: Aurora_testing
+      description: ALCF allocation to charge the batch jobs to (-A).
+---
+
+stages:
+  - build
+  - test
+
+include:
+  - project: 'anl/ci-resources/defaults'
+    ref: main
+    file:
+      - '/runners.yml'
+
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH ==
+        $CI_DEFAULT_BRANCH'
+
+variables:
+  MPICH_REF: aurora_test
+
+build-mpich:
+  extends: .aurora-shell-runner
+  stage: build
+  timeout: 2h
+  interruptible: true
+  script:
+    - ./ci/build-mpich.sh
+
+.aurora-debug-test:
+  extends: .aurora-batch-runner
+  stage: test
+  timeout: 1 day
+  interruptible: false
+  resource_group: debug_queue
+  needs:
+    - build-mpich
+  artifacts:
+    when: always
+    expire_in: 1 week
+    paths:
+      - reports/
+    reports:
+      junit: reports/*.xml
+
+test-1node:
+  extends: .aurora-debug-test
+  variables:
+    ANL_AURORA_SCHEDULER_PARAMETERS: >-
+      -A $[[ inputs.allocation ]] -l select=1,walltime=1:00:00,filesystems=home:flare -q debug
+  script:
+    - ./ci/run-suite.sh 1node
+
+test-2node:
+  extends: .aurora-debug-test
+  variables:
+    ANL_AURORA_SCHEDULER_PARAMETERS: >-
+      -A $[[ inputs.allocation ]] -l select=2,walltime=1:00:00,filesystems=home:flare -q debug
+  script:
+    - ./ci/run-suite.sh 2node
