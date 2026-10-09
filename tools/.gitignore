@@ -1,0 +1,4 @@
+# scraped issue bodies and model output: regenerate, do not commit
+issues.json
+verdicts.json
+*.verdicts.json
