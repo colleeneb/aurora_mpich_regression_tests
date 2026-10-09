@@ -1,11 +1,6 @@
 # tools
 
-Scripts for finding MPICH bugs that could become tests here. They live on the
-`tools` branch only, never on `main`, so `main` stays a clean mirror of
-upstream and a PR branched from it carries no tooling commits.
-
-Nothing here is wired to run automatically, and nothing has produced a test
-that has been run on Aurora yet.
+Scripts for finding MPICH bugs that could become tests here. 
 
 ## watch.py
 
