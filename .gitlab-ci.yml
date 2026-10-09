@@ -24,6 +24,7 @@ workflow:
 
 variables:
   MPICH_REF: aurora_test
+  MPICH_CI_ALLOCATION: $[[ inputs.allocation ]]
 
 build-mpich:
   extends: .aurora-shell-runner

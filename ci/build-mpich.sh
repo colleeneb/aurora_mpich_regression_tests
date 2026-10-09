@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-root=${MPICH_CI_ROOT:-/lus/flare/projects/datascience/aurora-mpich-ci}
+alloc=${MPICH_CI_ALLOCATION:-Aurora_testing}
+root=${MPICH_CI_ROOT:-/lus/flare/projects/$alloc/aurora-mpich-ci}
 ref=${MPICH_REF:-aurora_test}
 src=$root/src/mpich
 prefix=$root/mpich

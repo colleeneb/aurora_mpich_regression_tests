@@ -1,4 +1,5 @@
-root=${MPICH_CI_ROOT:-/lus/flare/projects/datascience/aurora-mpich-ci}
+alloc=${MPICH_CI_ALLOCATION:-Aurora_testing}
+root=${MPICH_CI_ROOT:-/lus/flare/projects/$alloc/aurora-mpich-ci}
 prefix=$root/mpich
 
 [ -f "$prefix/.stamp" ] || { echo "no MPICH build at $prefix" >&2; exit 1; }
