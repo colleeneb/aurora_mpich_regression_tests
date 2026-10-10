@@ -4,8 +4,7 @@ Scripts for finding MPICH bugs that could become tests here.
 
 ## watch.py
 
-Dumps aurora-labelled `pmodels/mpich` issues as JSON. No filtering, no state,
-no credentials: it reads public issues anonymously.
+Dumps aurora-labelled `pmodels/mpich` issues as JSON. 
 
     ./tools/watch.py --state open -o issues.json
     ./tools/watch.py --since 2026-07-01
